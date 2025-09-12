@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  
+  <div class="box1 mx-2">
+    </div>
+  <div class="signupform my-5">
+    <h2 style="color: rgb(11, 11, 35);">Sign Up Form</h2>
+    <form id="trueform">
+      <label for="name">First Name</label>
+      <input type="text"  id="fname" placeholder="Enter your First Name" required>
+       <small class="error" id="fnameError"></small>
+
+      <label for="name">Last Name</label>
+      <input type="text"  id="lname" placeholder="Enter your Last Name" required>
+       <small class="error" id="lnameError"></small>
+
+      <label for="email">Email</label>
+      <input type="email" id="email" placeholder="Enter you email id" required>
+       <small class="error" id="emailError"></small>
+
+      <label for="password">Password</label>
+      <input type="password" id="password" placeholder="Enter password" required>
+       <small class="error" id="passwordError"></small>
+
+      <label for="confirm">Confirm Password</label>
+      <input type="password" id="confirm" placeholder="Confirm Password" required>
+       <small class="error" id="confirmError"></small>
+
+       <button type="signup" id="signin">sign up</button>
+       <p id="success"></p>
+    </form>
+ <p id="err"></p>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
