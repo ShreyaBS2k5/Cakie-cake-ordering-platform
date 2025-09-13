@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Cart - Cakie</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #fdf6f9; }
+    h1 { text-align: center; color: #c94f7c; }
+    .cart-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 10px;
+      margin: 10px 0;
+      background: white;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .cart-item img { width: 80px; height: 60px; border-radius: 6px; margin-right: 10px; }
+    .cart-details { flex: 1; }
+    .cart-details h3 { margin: 0; }
+    .cart-details p { margin: 5px 0; }
+    .btn { 
+      padding: 6px 12px; 
+      margin-left: 5px; 
+      background: #c94f7c; 
+      color: white; 
+      border: none; 
+      border-radius: 4px; 
+      cursor: pointer; 
+    }
+    .total { font-size: 20px; text-align: right; margin-top: 20px; font-weight: bold; }
+    #confirm-btn { margin-top: 20px; float: right; }
+  </style>
+</head>
+<body>
+  <h1>🛒 My Cart</h1>
+  <div id="cart-container"></div>
+  <div class="total" id="cart-total"></div>
+  <button id="confirm-btn" class="btn">Confirm Order</button>
+
+  <script>
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const container = document.getElementById("cart-container");
+    const totalDiv = document.getElementById("cart-total");
+
+    function renderCart() {
+      container.innerHTML = "";
+      if (cart.length === 0) {
+        container.innerHTML = "<p>Your cart is empty!</p>";
+        totalDiv.textContent = "";
+        return;
+      }
+
+      let total = 0;
+      cart.forEach((item, index) => {
+        total += item.price;
+        const div = document.createElement("div");
+        div.classList.add("cart-item");
+        div.innerHTML = `
+          <img src="${item.img}" alt="${item.name}">
+          <div class="cart-details">
+            <h3>${item.name}</h3>
+            <p>₹${item.price}</p>
+          </div>
+          <button class="btn" onclick="removeFromCart(${index})">Remove</button>
+        `;
+        container.appendChild(div);
+      });
+      totalDiv.textContent = "Total: ₹" + total;
+    }
+
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      localStorage.setItem("cart", JSON.stringify(cart));
+      renderCart();
+    }
+
+    document.getElementById("confirm-btn").addEventListener("click", () => {
+      if(cart.length === 0){
+        alert("Your cart is empty!");
+        return;
+      }
+      alert("Order Confirmed!");
+      localStorage.setItem("cart", JSON.stringify([])); // clear cart
+      window.location.href = "payment.html"; // redirect to payment page
+    });
+
+    renderCart();
+  </script>
+</body>
+</html>
