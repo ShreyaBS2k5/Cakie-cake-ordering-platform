@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cupcake Page - Cakie</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: #fdf6f9;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #c94f7c;
+    }
+
+    /* Grid container */
+    .card-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    /* Card styling */
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      overflow: hidden;
+      text-align: center;
+      padding: 15px;
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 15px;
+    }
+
+    .card h3 {
+      margin: 10px 0;
+      color: #333;
+    }
+
+    .card p {
+      font-size: 14px;
+      color: #666;
+      margin: 5px 0;
+    }
+
+    .card .price {
+      font-weight: bold;
+      color: #c94f7c;
+      margin-top: 10px;
+    }
+
+     .btn {
+      background: #c94f7c;
+      color: #fff;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background 0.3s ease;
+    }
+
+    .btn:hover {
+      background: #a63c64;
+    }
+ 
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 24px;
+      }
+      .card img {
+        height: 160px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Our Cupies</h1>
+  <div class="card-container" id="dessert-container">
+    <!-- JS will insert cards here -->
+  </div>
+
+  <script>
+    // Dessert dictionary
+    const desserts = [
+      {
+        name: "Vanilla Cupcake",
+        price: 90,
+        img: "https://lh7-rt.googleusercontent.com/docsz/AD_4nXe6epkk33ly0f9iwx_XmEFBOQkPET1GiZ_FgILr-dUgrj7QjWiuygL2SsVmevfkyN2k92vuVLUnziCcEQevsKK2BInZKT5GCDTEOe135D2CojT1cmISrZE8MT1deOZuJMU7dIJqWg?key=4EK6vytxQDLDxNhgoS_Fl74Y",
+      },
+      {
+        name: "Red Velvet cupcake",
+        price: 150,
+        img: "https://lh7-rt.googleusercontent.com/docsz/AD_4nXfvTp2g5Q4wbu0c7RDpNh63zYVZDH2oUt0NPqGl7wckgWBf7svTvmIjS4uSCybNJ7TlstJpIWj3KsEGiofq8UnNVd6VGpDL4ueVKwtbnM3qQXUQY0QYdNMEnzUNQKzWx9jFd2oXhg?key=4EK6vytxQDLDxNhgoS_Fl74Y",
+      },
+      {
+        name: "Choco Punch",
+        price: 135,
+        img: "https://tse1.mm.bing.net/th/id/OIP.4FwPWWwNerDJAqHjpYKhnwHaHa?pid=Api&P=0&h=180",
+      },
+      {
+        name: "ButterScotch",
+        price: 180,
+        img: "https://tse4.mm.bing.net/th/id/OIP.jpXv233H4qVctC4-9-0OLwHaFj?pid=Api&P=0&h=180",
+        
+      },
+      {
+        name: "Creamy Berry",
+        price:210 ,
+        img: "https://tse1.mm.bing.net/th/id/OIP.KjmthiJN9AmWJyabLut38wHaHa?pid=Api&P=0&h=180",
+      },
+      {
+        name: "Pinep delite",
+        price:150 ,
+        img: "https://tse2.mm.bing.net/th/id/OIP.VVLNw2ZvenQt474fKYqzDQHaEw?pid=Api&P=0&h=180",
+      },
+      {
+        name: "Orea Fudge",
+        price: 185,
+        img: "https://tse1.mm.bing.net/th/id/OIP.egJmkdr5VYV_AngrrENYBQHaE8?pid=Api&P=0&h=180",
+      },
+      {
+        name: "Choco Pista",
+        price: 175 ,
+        img: "https://tse3.mm.bing.net/th/id/OIP.JlH2fz7EhJtpUgyLvSZtjQHaJ4?pid=Api&P=0&h=180",
+      },
+     
+    ];
+
+    // Render cards dynamically
+    const container = document.getElementById("dessert-container");
+
+    desserts.forEach(dessert => {
+      const card = document.createElement("div");
+      card.classList.add("card");
+      card.innerHTML = `
+  <img src="${dessert.img}" alt="${dessert.name}">
+  <h3>${dessert.name}</h3>
+  <p>${dessert.desc || ""}</p>
+  <p class="price">₹${dessert.price}</p>
+  <button class="btn" onclick="addToCart('${dessert.name}', ${dessert.price}, '${dessert.img}')">Add to Cart</button>
+`;
+
+      container.appendChild(card);
+    });
+     function addToCart(itemName, itemPrice, itemImg) {
+  // get existing cart or empty array
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  // add new item
+  cart.push({ name: itemName, price: itemPrice, img: itemImg });
+
+  // save back to localStorage
+  localStorage.setItem("cart", JSON.stringify(cart));
+
+  alert(itemName + " has been added to your cart!");
+}
+
+  </script>
+
+</body>
+</html>
